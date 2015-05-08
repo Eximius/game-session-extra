@@ -61,6 +61,8 @@ class GameSession(QObject):
         self.addArg('nobugreport')
         self.addArg('gpgnet', '127.0.0.1:%d' % self._game_listener.serverPort())
 
+        self.files = {}
+
     # Session command-line arguments
     def addArg(self, key, *args):
 
@@ -242,6 +244,49 @@ class GameSession(QObject):
 
         if command in ["GameState", "GameOption", "GameMods", "PlayerOption", "Chat"]:
             self._sendFAF(command, args)
+
+        if command == 'FOpen':
+            self._FOpen(int(args[0]), args[1:])
+
+        if command == 'FWrite':
+            self._FWrite(int(args[0]), args[1:])
+
+        if command == 'FClose':
+            self._FClose(int(args[0]))
+
+        logger.warn('Unknown command "%s"', command)
+
+
+    def _FOpen(self, id, name):
+        FILE_DIR = 'files'
+
+        logger.info('FOpen: %d, %s', id, name)
+
+        if not os.path.exists(FILE_DIR):
+            os.mkdir(FILE_DIR)
+
+        self.files[id] = open(os.path.join(FILE_DIR, name), 'wb')
+
+    def _FWrite(self, id, *args):
+        file = self.files.get(id)
+        if not file:
+            logger.warn('Unknown file id: %d', id)
+            return
+
+        file.write(' '.join([str(x) for x in args])+'\n')
+
+    def _FClose(self, id):
+
+        file = self.files.get(id)
+        logger.info('FClose: %d (%s)', id, str(file))
+
+        if not file:
+            logger.warn('Unknown file id: %d', id)
+            return
+
+        file.close()
+
+        del self.files[id]
 
     def _onGameConnectionClosed(self):
         logger.info("GC: disconnected.")
