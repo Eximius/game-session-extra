@@ -24,6 +24,17 @@ while i < len(sys.argv):
 
 sess.start(sys.argv[1])
 
+excepthook_original = sys.excepthook
+def excepthook(exc_type, exc_value, traceback_object):
+    """
+    This exception hook will stop the app if an uncaught error occurred, regardless where in the QApplication.
+    """
+
+    sys.excepthook = excepthook_original
+    app.exit(0)
+
+sys.excepthook = excepthook
+
 interpreter_timer = QTimer(app)
 interpreter_timer.start(500)
 interpreter_timer.timeout.connect(lambda: None)
