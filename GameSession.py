@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 def dump_val(x):
-    if isinstance(x, float):
-        return pack('<d', x)
+    if isinstance(x, int):
+        return pack('<Q', x)
     elif isinstance(x, str):
         return x.encode()
     else:
