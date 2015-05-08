@@ -2,8 +2,6 @@
 from GameSession import GameSession
 
 import sys
-import logging
-logging.basicConfig(level=logging.DEBUG)
 
 if len(sys.argv) < 2:
     print('usage: FA.exe [args...]')
