@@ -9,7 +9,7 @@ if len(sys.argv) < 2:
 
 from PyQt5.QtCore import *
 
-app = QCoreApplication()
+app = QCoreApplication(sys.argv)
 
 sess = GameSession()
 
@@ -22,4 +22,4 @@ while i < len(sys.argv):
     sess.addArg(sys.argv[i][1:], sys.argv[i+1:j+1])
 sess.start(sys.argv[1])
 
-app.exec()
+app.exec_()
