@@ -3,6 +3,7 @@ __author__ = 'vytautas'
 import os
 from os import path
 import logging
+from struct import pack
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -10,6 +11,14 @@ from PyQt5.QtNetwork import *
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
+def dump_val(x):
+    if isinstance(x, float):
+        return pack('<d', x)
+    elif isinstance(x, str):
+        return x.encode()
+    else:
+        logger.error('Unknown dump_val type: %s', type(x))
 
 from GameConnection import GameConnection
 
@@ -268,7 +277,7 @@ class GameSession(QObject):
             logger.warn('Unknown file id: %d', id)
             return
 
-        file.write((' '.join([str(x) for x in args])+'\n').encode())
+        file.write(b''.join(dump_val(x) for x in args))
 
     def _FClose(self, id):
 
