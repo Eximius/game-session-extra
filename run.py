@@ -19,8 +19,9 @@ while i < len(sys.argv):
     j = i+1
     while j < len(sys.argv) and sys.argv[j][0] != '/':
         j += 1
-    sess.addArg(sys.argv[i][1:], sys.argv[i+1:j+1])
-    i += 1
+    sess.addArg(sys.argv[i][1:], sys.argv[i+1:j])
+    i = j
+
 sess.start(sys.argv[1])
 
 app.exec_()
