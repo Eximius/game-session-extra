@@ -24,4 +24,8 @@ while i < len(sys.argv):
 
 sess.start(sys.argv[1])
 
+interpreter_timer = QTimer(app)
+interpreter_timer.start(500)
+interpreter_timer.timeout.connect(lambda: None)
+
 app.exec_()
