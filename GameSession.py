@@ -16,7 +16,8 @@ def dump_val(x):
     if isinstance(x, int):
         return pack('<Q', x)
     elif isinstance(x, str):
-        return x.encode()
+        data = x.encode()
+        return pack('<H', len(data)) + data
     else:
         logger.error('Unknown dump_val type: %s', type(x))
 
