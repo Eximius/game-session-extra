@@ -268,7 +268,7 @@ class GameSession(QObject):
             logger.warn('Unknown file id: %d', id)
             return
 
-        file.write(' '.join([str(x) for x in args])+'\n')
+        file.write(b' '.join([bytes(x) for x in args])+b'\n')
 
     def _FClose(self, id):
 
