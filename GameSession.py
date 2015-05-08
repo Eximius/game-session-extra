@@ -236,19 +236,20 @@ class GameSession(QObject):
                 #self._conn.send("SetGameOption", "OmniCheat", "on")
             self._GameState = args[0]
 
-        if command in ["GameState", "GameOption", "GameMods", "PlayerOption", "Chat"]:
+        elif command in ["GameState", "GameOption", "GameMods", "PlayerOption", "Chat"]:
             self._sendFAF(command, args)
 
-        if command == 'FOpen':
+        elif command == 'FOpen':
             self._FOpen(int(args[0]), args[1:])
 
-        if command == 'FWrite':
+        elif command == 'FWrite':
             self._FWrite(int(args[0]), args[1:])
 
-        if command == 'FClose':
+        elif command == 'FClose':
             self._FClose(int(args[0]))
 
-        logger.warn('Unknown command "%s"', command)
+        else:
+            logger.warn('Unknown command "%s"', command)
 
 
     def _FOpen(self, id, name):
