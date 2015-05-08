@@ -8,13 +8,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtNetwork import *
 
-import util
-from client import instance as client, api
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-from .GameConnection import GameConnection
+from GameConnection import GameConnection
 
 class SessionSetupFailed(Exception):
     pass
@@ -35,7 +32,7 @@ class GameSession(QObject):
         self._proc.readyReadStandardOutput.connect(self._onReadyReadStandardOutput)
         self._proc.readyReadStandardError.connect(self._onReadyReadStandardError)
 
-        self.gamePort = client.gamePort
+        self.gamePort = 6112
 
         self._GameState = None
         self._arguments = dict()
@@ -124,9 +121,6 @@ class GameSession(QObject):
 
     # Start the session (FA)
     def start(self, program=None):
-
-        program = program or path.join(util.BIN_DIR, "ForgedAlliance.exe")
-
         logger.info("Launching FA: %s", program)
         arguments = []
 
@@ -137,7 +131,7 @@ class GameSession(QObject):
 
         logger.info("Launching FA: %s", arguments)
 
-        self._proc.setWorkingDirectory(util.BIN_DIR)
+        self._proc.setWorkingDirectory(os.path.dirname(program))
 
         if os.name != 'nt':
             # Naive Wine cross-platform
