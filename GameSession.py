@@ -240,10 +240,10 @@ class GameSession(QObject):
             self._sendFAF(command, args)
 
         elif command == 'FOpen':
-            self._FOpen(int(args[0]), args[1:])
+            self._FOpen(int(args[0]), *args[1:])
 
         elif command == 'FWrite':
-            self._FWrite(int(args[0]), args[1:])
+            self._FWrite(int(args[0]), *args[1:])
 
         elif command == 'FClose':
             self._FClose(int(args[0]))
