@@ -40,7 +40,7 @@ class GameSession(QObject):
         # Session parameter defaults
         self._joinGameAddr = None
         self.gameMods = []
-        self.mapName = None #'scmp_009'
+        self.mapName = 'scmp_009'
         self.gameTitle = "No title."
         self.playerName = "Player"
         self.playerUID = 0
