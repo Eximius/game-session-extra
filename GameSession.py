@@ -14,7 +14,11 @@ logger.setLevel(logging.DEBUG)
 
 def dump_val(x):
     if isinstance(x, int):
-        return pack('<Q', x)
+        try:
+            return pack('<q', x)
+        except:
+            print('THIS CRAP:', x)
+            raise
     elif isinstance(x, str):
         data = x.encode()
         return pack('<H', len(data)) + data

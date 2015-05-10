@@ -1,4 +1,7 @@
 
+import logging
+logging.basicConfig()
+
 from GameSession import GameSession
 
 import sys
